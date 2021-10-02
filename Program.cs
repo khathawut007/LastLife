@@ -1,118 +1,47 @@
 ﻿using System;
-enum Menu {
-    Login = 1,
-    Register
-}
 
-
-namespace MTT2
+namespace ปรับปรุง
 {
     class Program
     {
-        
-        
-        static void Main(string[] args){
-
-            PrintMenuScreen(); 
-        }
-        
-        
-        static void PrintMenuScreen() { 
-            Console.Clear();
-            PrintHeader();
-            PrintListMenu();
-            InputMenuFromKeyboard();
-        }
-
-        static void PrintHeader(){
-            Console.WriteLine("Welcome to Digital Library.");
-            Console.WriteLine("---------------------------");
-        }
-        
-        static void PrintListMenu() {
-            Console.WriteLine("1.Login");
-            Console.WriteLine("2.Register");
-        }
-
-        static void InputMenuFromKeyboard() {
-            Console.Write("Select Menu: ");
-            Menu menu = (Menu)(int.Parse(Console.ReadLine()));
-
-            PresentMenu(menu);
-        }
-
-        static void PresentMenu(Menu menu) {
-            if (menu == Menu.Login) {
-                ShowInputLogin(); 
-            } else if (menu == Menu.Register) {
-                ShowInputRegister(); 
-            }else{
-                ShowMassageIsInCorrect();
-            }
-        }
-
-        static void ShowInputLogin(){
-            Console.Clear();
-            PrintHeaderLogin();
-
-            InputLoginFromkeyboard();
-        }
-
-        static void InputLoginFromkeyboard(){
-            Console.Clear();
-            PrintHeaderLogin();
-
-            Person person = CreateNewPerson();
-
-        }
-
-        static Person CreateNewPerson(){
-            return new Person (InputName(),
-            InputPassword(),
-            InputUserType());
+        static void Main(string[] args)
+        {
+            string decide = "y";
+            string selectFlower;
+            FlowerStore flowerStore = new FlowerStore();
+            do{
+                Console.WriteLine("Select number for buy flower :"); 
+                foreach (string i in flowerStore.flowerList){
+                    Console.Write((flowerStore.flowerList.IndexOf(i) + 1) + " "); 
+                    Console.WriteLine(i); 
+                } 
             
-        }
-        static string InputName() {
-            Console.Write("Input name: ");
+                selectFlower = Console.ReadLine();
+                
+                switch (selectFlower){
+                    case "1":
+                        flowerStore.addToCart(flowerStore.flowerList[0]);
+                        Console.WriteLine("Added "+ flowerStore.flowerList[0]);
+                        break;
+                    
+                    case "2":
+                        flowerStore.addToCart(flowerStore.flowerList[1]);
+                        Console.WriteLine("Added "+ flowerStore.flowerList[1]);
+                        break;
+                    
+                    default:
+                        Console.WriteLine("Not Added to cart. found select number of flower");
+                        break;
+                }
             
-            return Console.ReadLine();
-        }
-        static string InputPassword() {
-            Console.Write("Input Password: ");
-            
-            return Console.ReadLine();
-        }
-        static string InputUserType() {
-            Console.Write("Input User Type 1 = Student, 2 = Employee: {0} ");
-            
-            return Console.ReadLine();
-        }
-        
-
-    
-
-        static void PrintHeaderLogin(){
-            Console.WriteLine("Login Screen");
-            Console.WriteLine("------------");
-
-        }
-
-        static void ShowInputRegister(){
-            Console.Clear();
-            PrintHeaderRigister();
-        }
-
-        static void PrintHeaderRigister(){
-            Console.WriteLine("Register new Person");
-            Console.WriteLine("-------------------"); 
-
-        }
-
-        static void ShowMassageIsInCorrect(){
-            Console.Clear();
-            Console.WriteLine("Incorrect Please try again.");
-            InputMenuFromKeyboard();
+                    Console.WriteLine("You can stop this progress ? exit for >> exit << progress and press any key for continue");
+                    decide = Console.ReadLine();
+                    if(decide == "exit") {
+                        Console.Write("Current my cart");
+                        flowerStore.showCart();
+                    } 
+                }    
+               while (decide != "exit");      
         }
     }
-
 }
